@@ -2,36 +2,47 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 function Dashbord() {
-    const [userData, setUserData] = useState(null);
-    const [error, setError] = useState(null);
-  
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get('http://localhost:3000/api/user');
-          setUserData(response.data);
-        } catch (error) {
-          setError(error.message);
+  const [names, setNames] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/domain");
+        const responseData = await response.json();
+
+        if (responseData.data && Array.isArray(responseData.data)) {
+          const extractedNames = responseData.data.map((item) => item.name);
+
+          setNames(extractedNames);
+        } else {
+          console.error("Invalid API response:", responseData);
         }
-      };
-  
-      fetchData();
-      return () => {
-      };
-    }, []); 
-  
-    return (
-      <div className="p-10">
-        {userData ? (
-          <div>
-            <h2>User Data</h2>
-            <pre>{JSON.stringify(userData, null, 2)}</pre>
-          </div>
-        ) : (
-          <p>Loading...</p>
-        )}
-        {error && <p>Error: {error}</p>}
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      <div className="flex justify-center pt-10 ">
+        <h1 className="text-4xl">available domain names</h1>
       </div>
-    );
-  }
+
+      <div className="p-10">
+        <div>
+          <ul>
+            {names.map((name, index) => (
+              <li className="border-solid" key={index}>{name}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+
+    </div>
+  );
+}
 export default Dashbord;
