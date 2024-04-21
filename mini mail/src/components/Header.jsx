@@ -14,7 +14,7 @@ function Header() {
           <li><Link to="/new">New Domain</Link></li>
         </ul>
       </div>
-    </nav>
+    </nav>c
   </section>
   )
 }
