@@ -28,14 +28,14 @@ function Dashbord() {
   return (
     <div>
       <div className="flex justify-center pt-10 ">
-        <h1 className="text-4xl">available domain names</h1>
+        <h1 className="text-4xl">Available domain names</h1>
       </div>
 
       <div className="p-10">
         <div>
-          <ul>
+          <ul className="flex">
             {names.map((name, index) => (
-              <li className="border-solid" key={index}>{name}</li>
+              <li className="border-2 border-gray-500 text-lg w-64 text-center m-7 p-3 " key={index}>{name}</li>
             ))}
           </ul>
         </div>
